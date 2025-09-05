@@ -4,6 +4,14 @@
 
 ---
 
+## ▶️ Live Playground
+
+Explore PixelPoint instantly without installing anything!
+
+[![Open PixelPoint Playground](https://img.shields.io/badge/Try%20Now-Playground-blueviolet?style=for-the-badge&logo=vercel&logoColor=white)](https://pixelpoint.web.app/)
+
+---
+
 ## 🚀 Features
 
 - 🖼️ **Image Upload (Drag & Drop)** - Upload any image (JPG, PNG, GIF, SVG).
@@ -19,7 +27,7 @@
 
 ## 📷 Screenshot
 
-![PixelPoint Screenshot](./screenshot.png)
+![PixelPoint Screenshot](./images/screenshot.png)
 
 ---
 
