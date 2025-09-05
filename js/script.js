@@ -113,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
          .map(
             (c, i) => `
               <tr class="row-${c.markerID}">
-                <td>${i + 1}</td>
                 <td>${c.percentX}%</td>
                 <td>${c.percentY}%</td>
                 <td>${c.x}px</td>
@@ -130,12 +129,11 @@ document.addEventListener("DOMContentLoaded", () => {
             clicks.splice(index, 1);
 
             const markerId = e.target.dataset.marker;
-            console.log(markerId);
             const marker = document.querySelector(`#marker-${markerId}`);
             if (marker) marker.remove();
 
-            const row = document.querySelector(`.row-${markerId}`);
-            if (row) row.remove();
+            renderHistory();
+
          });
       });
    }
