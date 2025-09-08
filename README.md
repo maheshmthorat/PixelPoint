@@ -19,7 +19,6 @@ Explore PixelPoint instantly without installing anything!
 - 📝 **Coordinates Tracking** - View both percentage and pixel values.
 - 📜 **Click History** - See the last pins added in a table view.
 - ❌ **Remove Pins** - Delete individual pins from history.
-- 📋 **Copy to Clipboard** - Copy coordinates with one click.
 - ⬇️ **Download CSV** - Export all pins for later use.
 - ⚡ **Clear Image & Pins** - Reset everything quickly.
 
