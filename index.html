@@ -70,30 +70,71 @@
       }
       #image-container {
         position: relative;
-        display: inline-block;
+        display: block;
         margin-top: 15px;
-        width: 100%;
-        max-width: 500px;
-        height: 500px;
+        max-width: 100%;
+        max-height: 50vh;
+        height: 50vh;
         overflow: auto;
         border: 2px solid #dee2e6;
         border-radius: 8px;
+        background: #f8f9fa;
+        cursor: move;
       }
+
+      #instruction-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+        font-size: 20px;
+        transition: opacity 0.3s ease;
+        z-index: 9;
+        pointer-events: none;
+      }
+
+      #image-container.active {
+        cursor: grabbing;
+      }
+
       #image {
-        max-width: 100%;
-        height: auto;
-        cursor: crosshair;
+        display: none;
+        position: relative;
+        max-width: none;
+        max-height: none;
+        user-drag: none;
+        -webkit-user-drag: none;
+        pointer-events: auto;
       }
+
       .marker {
         position: absolute;
-        width: 8px;
-        height: 8px;
-        border: solid 1px;
+        width: 20px;
+        height: 20px;
         background: red;
-        border-radius: 50%;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        transform-origin: -100% 50%;
         pointer-events: none;
-        transform: translate(-50%, -50%);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       }
+
+      .marker::after {
+        content: "";
+        width: 10px;
+        height: 10px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+      }
+
       .hidden {
         display: none !important;
       }
@@ -107,6 +148,10 @@
           #ddddde 0%,
           #f7f8f9 100%
         ) !important;
+      }
+      .table-card-body {
+        max-height: 300px;
+        overflow-y: scroll;
       }
     </style>
   </head>
@@ -131,28 +176,30 @@
       </div>
 
       <div id="point-container" class="hidden row bg-light-subtle">
-        <div class="col-md-6">
-          <div class="text-center">
-            <div id="image-container" class="mx-auto">
-              <img
-                id="image"
-                alt="Upload an image to click"
-                style="display: none"
-              />
+        <div class="text-center col-md-12 dropZoom">
+          <div id="image-container" class="mx-auto">
+            <img
+              id="image"
+              alt="Upload an image to click"
+              style="display: none"
+            />
+            <div id="instruction-overlay">
+              Click and drag to move the image. Click on a spot to add a
+              pointer.
             </div>
           </div>
-          <div class="d-flex justify-content-center mt-3 gap-2">
-            <button id="clear-btn" class="btn btn-danger">Clear Image</button>
+        </div>
+        <div class="col-md-5">
+          <div id="dimensions" class="alert alert-info mt-4 text-center"></div>
+          <div class="d-flex justify-content-center my-3 gap-2">
+            <button id="clear-btn" class="btn btn-warning">Change Image</button>
             <!-- <button id="copy-btn" class="btn btn-outline-primary">
               Copy Coordinates
             </button> -->
-            <button id="download-btn" class="btn btn-success">
-              Download CSV
-            </button>
+            <button id="download-btn" class="btn btn-dark">Download CSV</button>
           </div>
-          <div id="dimensions" class="alert alert-info mt-4 text-center"></div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
           <div
             id="noData"
             class="alert alert-info bg-warning-subtle mt-4 text-center"
@@ -180,11 +227,12 @@
             </div>
           </div>
           <div
+            style="display: none !important"
             id="imagePosition"
             class="alert alert-warning bg-info-subtle mt-4 text-center hidden"
           ></div>
-          <div id="clickHistory" class="card hidden mt-4 shadow-sm">
-            <div class="card-body p-0">
+          <div id="clickHistory" class="card hidden my-4 shadow-sm">
+            <div class="card-body table-card-body p-0">
               <table class="table table-sm table-striped mb-0">
                 <thead class="table-light">
                   <tr>

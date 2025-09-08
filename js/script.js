@@ -14,6 +14,17 @@ document.addEventListener("DOMContentLoaded", () => {
    const historyBody = document.getElementById("history-body");
    const pointContainer = document.getElementById("point-container");
 
+   const overlay = document.getElementById("instruction-overlay");
+
+   let isDown = false;
+   let isDragging = false;
+   let startX;
+   let startY;
+   let scrollLeft;
+   let scrollTop;
+
+
+
    let imageWidth = 0,
       imageHeight = 0;
    let clicks = [];
@@ -44,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
          image.onload = function () {
             imageWidth = image.naturalWidth;
             imageHeight = image.naturalHeight;
-            dimensionsInput.innerHTML = `Width: <b>${imageWidth}px</b> | Height: <b>${imageHeight}px</b>`;
+            dimensionsInput.innerHTML = `Dimensions - Width: <b>${imageWidth}px</b> | Height: <b>${imageHeight}px</b>`;
          };
          image.src = e.target.result;
          image.style.display = "block";
@@ -73,7 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
    });
 
    // Click for coordinates
-   image.addEventListener("click", (event) => {
+   const placeMarker = (event) => {
+
       const rect = image.getBoundingClientRect();
       let x = event.clientX - rect.left;
       let y = event.clientY - rect.top;
@@ -106,20 +118,28 @@ document.addEventListener("DOMContentLoaded", () => {
          markerID
       });
       renderHistory();
-   });
+
+   }
 
    function renderHistory() {
       historyBody.innerHTML = clicks
-         .map(
-            (c, i) => `
-              <tr class="row-${c.markerID}">
-                <td>${c.percentX}%</td>
-                <td>${c.percentY}%</td>
-                <td>${c.x}px</td>
-                <td>${c.y}px</td>
-                <td><button class="remove-btn btn btn-outline-danger btn-sm" data-index="${i}" data-marker="${c.markerID}">&times; Remove</button></td>
-              </tr>`
-         )
+         .slice()
+         .reverse()
+         .map((c, i) => `
+    <tr class="row-${c.markerID}">
+      <td>${c.percentX}%</td>
+      <td>${c.percentY}%</td>
+      <td>${c.x}px</td>
+      <td>${c.y}px</td>
+      <td>
+        <button class="remove-btn btn btn-outline-danger btn-sm"
+          data-index="${clicks.length - 1 - i}" 
+          data-marker="${c.markerID}">
+          &times; Remove
+        </button>
+      </td>
+    </tr>
+  `)
          .join("");
 
       // attach remove listeners
@@ -139,12 +159,12 @@ document.addEventListener("DOMContentLoaded", () => {
    }
 
    // Copy to clipboard
-   copyBtn.addEventListener("click", () => {
-      const text = `Left: ${coordinatesLeft.value}%, Top: ${coordinatesTop.value}%`;
-      navigator.clipboard.writeText(text).then(() => {
-         alert("Coordinates copied!");
-      });
-   });
+   // copyBtn.addEventListener("click", () => {
+   //    const text = `Left: ${coordinatesLeft.value}%, Top: ${coordinatesTop.value}%`;
+   //    navigator.clipboard.writeText(text).then(() => {
+   //       alert("Coordinates copied!");
+   //    });
+   // });
 
    // Download CSV
    downloadBtn.addEventListener("click", () => {
@@ -161,4 +181,61 @@ document.addEventListener("DOMContentLoaded", () => {
       a.click();
       URL.revokeObjectURL(url);
    });
+
+
+
+   // Image Dragging
+
+   imageContainer.addEventListener("mousedown", (e) => {
+      isDown = true;
+      isDragging = false; // reset
+      startX = e.pageX - imageContainer.offsetLeft;
+      startY = e.pageY - imageContainer.offsetTop;
+      scrollLeft = imageContainer.scrollLeft;
+      scrollTop = imageContainer.scrollTop;
+   });
+
+   imageContainer.addEventListener("mouseleave", () => {
+      isDown = false;
+   });
+
+   imageContainer.addEventListener("mouseup", (e) => {
+      if (!isDragging) {
+         placeMarker(e);
+      }
+      isDown = false;
+   });
+
+   imageContainer.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+
+      const x = e.pageX - imageContainer.offsetLeft;
+      const y = e.pageY - imageContainer.offsetTop;
+      const walkX = x - startX;
+      const walkY = y - startY;
+
+      // If moved more than 5px, consider it dragging
+      if (Math.abs(walkX) > 5 || Math.abs(walkY) > 5) {
+         isDragging = true;
+      }
+
+      if (isDragging) {
+         e.preventDefault();
+         imageContainer.scrollLeft = scrollLeft - walkX;
+         imageContainer.scrollTop = scrollTop - walkY;
+      }
+   });
+
+
+   // Show overlay when NOT hovering
+   imageContainer.addEventListener("mouseenter", () => {
+      overlay.style.opacity = "0";
+      overlay.style.visibility = "hidden";
+   });
+
+   imageContainer.addEventListener("mouseleave", () => {
+      overlay.style.opacity = "1";
+      overlay.style.visibility = "visible";
+   });
+
 });
