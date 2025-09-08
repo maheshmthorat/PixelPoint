@@ -101,14 +101,22 @@
         max-width: 300px;
         opacity: 0.8;
       }
+      .bg-light {
+        background: linear-gradient(
+          to bottom,
+          #ddddde 0%,
+          #f7f8f9 100%
+        ) !important;
+      }
     </style>
   </head>
 
   <body class="bg-light">
-    <div class="container py-5">
+    <div class="container">
       <div class="text-center mb-4">
-        <h1 class="fw-bold text-primary">PixelPoint</h1>
-        <p class="text-muted">
+        <img class="uploadImage" src="images/logo.png" />
+        <!-- <h1 class="fw-bold text-primary">PixelPoint</h1> -->
+        <p class="text-muted mt-4">
           <strong> Click with precision - Map every pixel, perfectly. </strong>
         </p>
       </div>
@@ -122,7 +130,7 @@
         <input type="file" id="image-upload" accept="image/*" hidden />
       </div>
 
-      <div id="point-container" class="hidden row">
+      <div id="point-container" class="hidden row bg-light-subtle">
         <div class="col-md-6">
           <div class="text-center">
             <div id="image-container" class="mx-auto">
@@ -135,10 +143,10 @@
           </div>
           <div class="d-flex justify-content-center mt-3 gap-2">
             <button id="clear-btn" class="btn btn-danger">Clear Image</button>
-            <button id="copy-btn" class="btn btn-outline-primary">
+            <!-- <button id="copy-btn" class="btn btn-outline-primary">
               Copy Coordinates
-            </button>
-            <button id="download-btn" class="btn btn-outline-success">
+            </button> -->
+            <button id="download-btn" class="btn btn-success">
               Download CSV
             </button>
           </div>
@@ -195,14 +203,107 @@
       </div>
     </div>
 
-    <footer class="text-center py-3 mt-5 bg-light border-top">
+    <section class="container my-5">
+      <h2 class="mb-4 text-center">🚀 Features</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex align-items-start">
+              <div class="me-3" style="font-size: 2rem">🖼️</div>
+              <div>
+                <h5 class="card-title mb-1">Image Upload</h5>
+                <p class="card-text mb-0">
+                  Drag & drop or upload JPG, PNG, GIF, or SVG files.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex align-items-start">
+              <div class="me-3" style="font-size: 2rem">📍</div>
+              <div>
+                <h5 class="card-title mb-1">Pin Placement</h5>
+                <p class="card-text mb-0">
+                  Click on the image to drop markers.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex align-items-start">
+              <div class="me-3" style="font-size: 2rem">📝</div>
+              <div>
+                <h5 class="card-title mb-1">Coordinates Tracking</h5>
+                <p class="card-text mb-0">
+                  View both percentage and pixel values.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex align-items-start">
+              <div class="me-3" style="font-size: 2rem">📜</div>
+              <div>
+                <h5 class="card-title mb-1">Click History</h5>
+                <p class="card-text mb-0">
+                  See the last pins added in a table view.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex align-items-start">
+              <div class="me-3" style="font-size: 2rem">❌</div>
+              <div>
+                <h5 class="card-title mb-1">Remove Pins</h5>
+                <p class="card-text mb-0">
+                  Delete individual pins from history.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex align-items-start">
+              <div class="me-3" style="font-size: 2rem">⬇️</div>
+              <div>
+                <h5 class="card-title mb-1">Download CSV</h5>
+                <p class="card-text mb-0">Export all pins for later use.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex align-items-start">
+              <div class="me-3" style="font-size: 2rem">⚡</div>
+              <div>
+                <h5 class="card-title mb-1">Clear Image & Pins</h5>
+                <p class="card-text mb-0">Reset everything quickly.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-3 mt-5 bg-light-subtle border-top">
       © 2025 | By
       <strong
         ><a href="https://github.com/maheshmthorat/" target="_blank"
           >Mahesh Mohan Thorat</a
         ></strong
       >
-      – Made with ❤ in India 🇮🇳
+      - Made with ❤ in India
     </footer>
 
     <script
