@@ -70,7 +70,8 @@
       }
       #image-container {
         position: relative;
-        display: block;
+        display: inline-block;
+        text-align: center;
         margin-top: 15px;
         max-width: 100%;
         max-height: 50vh;
@@ -79,11 +80,11 @@
         border: 2px solid #dee2e6;
         border-radius: 8px;
         background: #f8f9fa;
-        cursor: move;
+        cursor: no-drop;
       }
 
       #instruction-overlay {
-        position: absolute;
+        position: sticky;
         inset: 0;
         background: rgba(0, 0, 0, 0.5);
         color: #fff;
@@ -110,6 +111,7 @@
         user-drag: none;
         -webkit-user-drag: none;
         pointer-events: auto;
+        cursor: move;
       }
 
       .marker {

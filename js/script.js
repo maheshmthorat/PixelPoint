@@ -23,8 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
    let scrollLeft;
    let scrollTop;
 
-
-
    let imageWidth = 0,
       imageHeight = 0;
    let clicks = [];
@@ -92,7 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const percentX = Math.round((x * 100) / imageWidth);
       const percentY = Math.round((y * 100) / imageHeight);
-
+      if (percentX > 100 || percentY > 100) {
+         return;
+      }
       coordinatesLeft.value = percentX;
       coordinatesTop.value = percentY;
 
@@ -228,14 +228,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
    // Show overlay when NOT hovering
-   imageContainer.addEventListener("mouseenter", () => {
-      overlay.style.opacity = "0";
-      overlay.style.visibility = "hidden";
-   });
+   // imageContainer.addEventListener("mouseenter", () => {
+   //    overlay.style.opacity = "0";
+   //    overlay.style.visibility = "hidden";
+   // });
 
-   imageContainer.addEventListener("mouseleave", () => {
-      overlay.style.opacity = "1";
-      overlay.style.visibility = "visible";
-   });
+   // imageContainer.addEventListener("mouseleave", () => {
+   //    overlay.style.opacity = "1";
+   //    overlay.style.visibility = "visible";
+   // });
 
 });
